@@ -359,8 +359,17 @@
                     Сума перевищеного встановленого ліміту
                 </h3>
                 <div class="form-group">
-                    <label for="overdraftEnd">Сума перевищеного ліміту на кінець місяця (грн)</label>
-                    <input type="number" id="overdraftEnd" value="0" step="0.01" min="0">
+                    <label>Сума на кінець місяця</label>
+                    <div style="display: flex; gap: var(--space-12);">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: var(--space-12); border: 1px solid var(--color-border); border-radius: var(--radius-base); flex: 1; background-color: var(--color-background);">
+                            <input type="radio" name="overdraftRange" value="less" checked style="width: auto;">
+                            Менше 1000 грн (3.1%)
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: var(--space-12); border: 1px solid var(--color-border); border-radius: var(--radius-base); flex: 1; background-color: var(--color-background);">
+                            <input type="radio" name="overdraftRange" value="more" style="width: auto;">
+                            1000 грн і більше (6.2%)
+                        </label>
+                    </div>
                 </div>
                 <div id="periodsOverdraft"></div>
                 <button class="btn" onclick="addPeriodOverdraft()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
@@ -378,13 +387,13 @@
                         <span class="result-label">Відсотки 6.2%</span>
                         <span class="result-value" id="interest62">0 грн</span>
                     </div>
-                    <div class="result-item">
+                    <div class="result-item" style="border-top: 2px solid var(--color-border); padding-top: var(--space-16); margin-top: var(--space-8);">
+                        <span class="result-label" style="font-weight: 600;">Всього за кредитний ліміт</span>
+                        <span class="result-value highlight" id="totalInterest">0 грн</span>
+                    </div>
+                    <div class="result-item" style="margin-top: var(--space-16); padding-top: var(--space-16); border-top: 1px solid var(--color-border);">
                         <span class="result-label">Відсотки за перевищення ліміту (ставка: <span id="appliedRate">0%</span>)</span>
                         <span class="result-value" id="interestOverdraft">0 грн</span>
-                    </div>
-                    <div class="result-item" style="border-top: 2px solid var(--color-border); padding-top: var(--space-16); margin-top: var(--space-8);">
-                        <span class="result-label" style="font-weight: 600;">Всього нараховано відсотків</span>
-                        <span class="result-value highlight" id="totalInterest">0 грн</span>
                     </div>
                 </div>
                 
@@ -574,8 +583,8 @@
             });
             
             // Розрахунок овердрафту
-            const endAmount = parseFloat(document.getElementById('overdraftEnd').value) || 0;
-            const rate = endAmount >= 1000 ? 6.2 : 3.1;
+            const overdraftRange = document.querySelector('input[name="overdraftRange"]:checked').value;
+            const rate = overdraftRange === 'more' ? 6.2 : 3.1;
             
             const periodsDivOverdraft = document.getElementById('periodsOverdraft');
             const periodCardsOverdraft = periodsDivOverdraft.querySelectorAll('.period-card');
@@ -593,13 +602,13 @@
                 }
             });
             
-            const totalInterest = totalInterest31 + totalInterest62 + totalInterestOverdraft;
+            const totalInterest = totalInterest31 + totalInterest62;
             
             document.getElementById('interest31').textContent = totalInterest31.toFixed(2) + ' грн';
             document.getElementById('interest62').textContent = totalInterest62.toFixed(2) + ' грн';
+            document.getElementById('totalInterest').textContent = totalInterest.toFixed(2) + ' грн';
             document.getElementById('appliedRate').textContent = rate + '%';
             document.getElementById('interestOverdraft').textContent = totalInterestOverdraft.toFixed(2) + ' грн';
-            document.getElementById('totalInterest').textContent = totalInterest.toFixed(2) + ' грн';
             document.getElementById('resultCredit').style.display = 'block';
         }
         
