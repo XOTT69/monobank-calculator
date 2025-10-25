@@ -321,71 +321,75 @@
         <p class="subtitle">Розрахунок процентів за кредитним лімітом</p>
         
         <div class="tabs">
-            <button class="tab active" data-tab="rate31">Ставка 3.1%</button>
-            <button class="tab" data-tab="rate62">Ставка 6.2%</button>
+            <button class="tab active" data-tab="credit">Кредитний ліміт</button>
             <button class="tab" data-tab="installment">Розстрочка</button>
         </div>
         
-        <!-- Ставка 3.1% -->
-        <div class="tab-content active" id="rate31">
+        <!-- Кредитний ліміт -->
+        <div class="tab-content active" id="credit">
             <div class="card">
                 <h2 style="margin-bottom: var(--space-16); font-size: 20px;">
-                    Розрахунок процентів <span class="rate-badge">3.1%</span>
+                    Розрахунок процентів за кредитним лімітом
                 </h2>
                 
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="leapYearCredit" style="width: auto;">
+                        Високосний рік (366 днів)
+                    </label>
+                </div>
+                
+                <h3 style="margin: var(--space-20) 0 var(--space-12) 0; font-size: 16px; font-weight: 600;">
+                    Ставка 3.1%
+                </h3>
                 <div id="periods31"></div>
-                
                 <button class="btn" onclick="addPeriod31()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
-                    + Додати період
+                    + Додати період 3.1%
                 </button>
                 
-                <button class="btn" onclick="calculate31()">Розрахувати</button>
-                
-                <div class="result-section" id="result31" style="display: none;">
-                    <div class="result-item">
-                        <span class="result-label">Нараховано відсотків</span>
-                        <span class="result-value highlight" id="interest31">0 грн</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Всього до сплати</span>
-                        <span class="result-value" id="total31">0 грн</span>
-                    </div>
-                </div>
-                
-                <div class="info-box">
-                    ℹ️ Формула: (Сума × Кількість днів × 3.1% × 12) / 365 / 100 для кожного періоду
-                </div>
-            </div>
-        </div>
-        
-        <!-- Ставка 6.2% -->
-        <div class="tab-content" id="rate62">
-            <div class="card">
-                <h2 style="margin-bottom: var(--space-16); font-size: 20px;">
-                    Розрахунок процентів <span class="rate-badge">6.2%</span>
-                </h2>
-                
+                <h3 style="margin: var(--space-20) 0 var(--space-12) 0; font-size: 16px; font-weight: 600;">
+                    Ставка 6.2%
+                </h3>
                 <div id="periods62"></div>
-                
                 <button class="btn" onclick="addPeriod62()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
-                    + Додати період
+                    + Додати період 6.2%
                 </button>
                 
-                <button class="btn" onclick="calculate62()">Розрахувати</button>
+                <h3 style="margin: var(--space-20) 0 var(--space-12) 0; font-size: 16px; font-weight: 600;">
+                    Овердрафт
+                </h3>
+                <div class="form-group">
+                    <label for="overdraftEnd">Сума овердрафту на кінець місяця (грн)</label>
+                    <input type="number" id="overdraftEnd" value="0" step="0.01" min="0">
+                </div>
+                <div id="periodsOverdraft"></div>
+                <button class="btn" onclick="addPeriodOverdraft()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
+                    + Додати період овердрафту
+                </button>
                 
-                <div class="result-section" id="result62" style="display: none;">
+                <button class="btn" onclick="calculateCredit()">Розрахувати все разом</button>
+                
+                <div class="result-section" id="resultCredit" style="display: none;">
                     <div class="result-item">
-                        <span class="result-label">Нараховано відсотків</span>
-                        <span class="result-value highlight" id="interest62">0 грн</span>
+                        <span class="result-label">Відсотки 3.1%</span>
+                        <span class="result-value" id="interest31">0 грн</span>
                     </div>
                     <div class="result-item">
-                        <span class="result-label">Всього до сплати</span>
-                        <span class="result-value" id="total62">0 грн</span>
+                        <span class="result-label">Відсотки 6.2%</span>
+                        <span class="result-value" id="interest62">0 грн</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Відсотки овердрафт (ставка: <span id="appliedRate">0%</span>)</span>
+                        <span class="result-value" id="interestOverdraft">0 грн</span>
+                    </div>
+                    <div class="result-item" style="border-top: 2px solid var(--color-border); padding-top: var(--space-16); margin-top: var(--space-8);">
+                        <span class="result-label" style="font-weight: 600;">Всього нараховано відсотків</span>
+                        <span class="result-value highlight" id="totalInterest">0 грн</span>
                     </div>
                 </div>
                 
                 <div class="info-box">
-                    ℹ️ Формула: (Сума × Кількість днів × 6.2% × 12) / 365 / 100 для кожного періоду
+                    ℹ️ Формула: (Сума × Кількість днів × Ставка% × 12) / 365(366) / 100. Овердрафт: якщо на кінець місяця &lt; 1000 грн — 3.1%, якщо ≥ 1000 грн — 6.2%
                 </div>
             </div>
         </div>
@@ -440,6 +444,7 @@
     <script>
         let periodCounter31 = 0;
         let periodCounter62 = 0;
+        let periodCounterOverdraft = 0;
         
         // Перемикання вкладок
         document.querySelectorAll('.tab').forEach(tab => {
@@ -529,70 +534,73 @@
             }
         }
         
-        // Розрахунок для 3.1%
-        function calculate31() {
-            const periodsDiv = document.getElementById('periods31');
-            const periodCards = periodsDiv.querySelectorAll('.period-card');
+        // Об'єднаний розрахунок для кредитного ліміту
+        function calculateCredit() {
+            const isLeap = document.getElementById('leapYearCredit').checked;
+            const daysInYear = isLeap ? 366 : 365;
             
-            if (periodCards.length === 0) {
-                alert('Додайте хоча б один період для розрахунку');
-                return;
-            }
+            // Розрахунок 3.1%
+            const periodsDiv31 = document.getElementById('periods31');
+            const periodCards31 = periodsDiv31.querySelectorAll('.period-card');
+            let totalInterest31 = 0;
             
-            let totalInterest = 0;
-            let totalDebt = 0;
-            
-            periodCards.forEach(card => {
+            periodCards31.forEach(card => {
                 const from = parseInt(card.querySelector('.debt31-from').value) || 0;
                 const to = parseInt(card.querySelector('.debt31-to').value) || 0;
                 const amount = parseFloat(card.querySelector('.debt31-amount').value) || 0;
                 
                 const days = to - from + 1;
                 if (days > 0) {
-                    const interest = (amount * days * 3.1 * 12) / 365 / 100;
-                    totalInterest += interest;
-                    totalDebt = Math.max(totalDebt, amount);
+                    const interest = (amount * days * 3.1 * 12) / daysInYear / 100;
+                    totalInterest31 += interest;
                 }
             });
             
-            const total = totalDebt + totalInterest;
+            // Розрахунок 6.2%
+            const periodsDiv62 = document.getElementById('periods62');
+            const periodCards62 = periodsDiv62.querySelectorAll('.period-card');
+            let totalInterest62 = 0;
             
-            document.getElementById('interest31').textContent = totalInterest.toFixed(2) + ' грн';
-            document.getElementById('total31').textContent = total.toFixed(2) + ' грн';
-            document.getElementById('result31').style.display = 'block';
-        }
-        
-        // Розрахунок для 6.2%
-        function calculate62() {
-            const periodsDiv = document.getElementById('periods62');
-            const periodCards = periodsDiv.querySelectorAll('.period-card');
-            
-            if (periodCards.length === 0) {
-                alert('Додайте хоча б один період для розрахунку');
-                return;
-            }
-            
-            let totalInterest = 0;
-            let totalDebt = 0;
-            
-            periodCards.forEach(card => {
+            periodCards62.forEach(card => {
                 const from = parseInt(card.querySelector('.debt62-from').value) || 0;
                 const to = parseInt(card.querySelector('.debt62-to').value) || 0;
                 const amount = parseFloat(card.querySelector('.debt62-amount').value) || 0;
                 
                 const days = to - from + 1;
                 if (days > 0) {
-                    const interest = (amount * days * 6.2 * 12) / 365 / 100;
-                    totalInterest += interest;
-                    totalDebt = Math.max(totalDebt, amount);
+                    const interest = (amount * days * 6.2 * 12) / daysInYear / 100;
+                    totalInterest62 += interest;
                 }
             });
             
-            const total = totalDebt + totalInterest;
+            // Розрахунок овердрафту
+            const endAmount = parseFloat(document.getElementById('overdraftEnd').value) || 0;
+            const rate = endAmount >= 1000 ? 6.2 : 3.1;
             
-            document.getElementById('interest62').textContent = totalInterest.toFixed(2) + ' грн';
-            document.getElementById('total62').textContent = total.toFixed(2) + ' грн';
-            document.getElementById('result62').style.display = 'block';
+            const periodsDivOverdraft = document.getElementById('periodsOverdraft');
+            const periodCardsOverdraft = periodsDivOverdraft.querySelectorAll('.period-card');
+            let totalInterestOverdraft = 0;
+            
+            periodCardsOverdraft.forEach(card => {
+                const from = parseInt(card.querySelector('.overdraft-from').value) || 0;
+                const to = parseInt(card.querySelector('.overdraft-to').value) || 0;
+                const amount = parseFloat(card.querySelector('.overdraft-amount').value) || 0;
+                
+                const days = to - from + 1;
+                if (days > 0) {
+                    const interest = (amount * days * rate * 12) / daysInYear / 100;
+                    totalInterestOverdraft += interest;
+                }
+            });
+            
+            const totalInterest = totalInterest31 + totalInterest62 + totalInterestOverdraft;
+            
+            document.getElementById('interest31').textContent = totalInterest31.toFixed(2) + ' грн';
+            document.getElementById('interest62').textContent = totalInterest62.toFixed(2) + ' грн';
+            document.getElementById('appliedRate').textContent = rate + '%';
+            document.getElementById('interestOverdraft').textContent = totalInterestOverdraft.toFixed(2) + ' грн';
+            document.getElementById('totalInterest').textContent = totalInterest.toFixed(2) + ' грн';
+            document.getElementById('resultCredit').style.display = 'block';
         }
         
         // Розрахунок розстрочки
@@ -612,9 +620,48 @@
             document.getElementById('resultInst').style.display = 'block';
         }
         
+        // Додавання періоду для овердрафту
+        function addPeriodOverdraft() {
+            periodCounterOverdraft++;
+            const periodsDiv = document.getElementById('periodsOverdraft');
+            const periodCard = document.createElement('div');
+            periodCard.className = 'period-card';
+            periodCard.id = 'periodOverdraft-' + periodCounterOverdraft;
+            periodCard.innerHTML = `
+                <div class="period-header">
+                    <span class="period-title">Період ${periodCounterOverdraft}</span>
+                    <button class="remove-btn" onclick="removePeriodOverdraft(${periodCounterOverdraft})" title="Видалити період">×</button>
+                </div>
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>День від</label>
+                        <input type="number" class="overdraft-from" value="1" min="1" max="31">
+                    </div>
+                    <div class="form-group">
+                        <label>День до</label>
+                        <input type="number" class="overdraft-to" value="10" min="1" max="31">
+                    </div>
+                    <div class="form-group">
+                        <label>Сума овердрафту (грн)</label>
+                        <input type="number" class="overdraft-amount" value="2000" step="0.01" min="0">
+                    </div>
+                </div>
+            `;
+            periodsDiv.appendChild(periodCard);
+        }
+        
+        // Видалення періоду для овердрафту
+        function removePeriodOverdraft(id) {
+            const period = document.getElementById('periodOverdraft-' + id);
+            if (period) {
+                period.remove();
+            }
+        }
+        
         // Ініціалізація з одним періодом для кожної ставки
         addPeriod31();
         addPeriod62();
+        addPeriodOverdraft();
         
         // Автоматичний розрахунок при зміні значень для розстрочки
         ['amountInst', 'monthsInst'].forEach(id => {
