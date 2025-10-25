@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор MonoBank</title>
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-black: rgba(0, 0, 0, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-400: rgba(45, 166, 178, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-gray-400-rgb: 119, 124, 124;
+                --color-teal-300-rgb: 50, 184, 198;
+                --color-gray-300-rgb: 167, 169, 169;
+                --color-gray-200-rgb: 245, 245, 245;
+                
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-primary-hover: var(--color-teal-400);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+            }
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            padding: var(--space-24);
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+            color: var(--color-text);
+        }
+        
+        .subtitle {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-32);
+            font-size: 14px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: var(--space-8);
+            margin-bottom: var(--space-24);
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .tab {
+            padding: var(--space-12) var(--space-24);
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .tab:hover {
+            color: var(--color-text);
+        }
+        
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .card {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-card-border);
+            padding: var(--space-24);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-24);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-20);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: var(--space-8);
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--color-text);
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: var(--space-12);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: 15px;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            transition: border-color 0.2s;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: var(--space-12) var(--space-24);
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-base);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: var(--color-primary-hover);
+        }
+        
+        .result-section {
+            margin-top: var(--space-24);
+            padding: var(--space-20);
+            background-color: var(--color-background);
+            border-radius: var(--radius-base);
+            border: 1px solid var(--color-card-border);
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-12) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+        
+        .result-value {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--color-text);
+        }
+        
+        .result-value.highlight {
+            color: var(--color-primary);
+            font-size: 18px;
+        }
+        
+        .info-box {
+            background-color: rgba(var(--color-teal-500-rgb), 0.08);
+            border-left: 3px solid var(--color-primary);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-top: var(--space-16);
+            font-size: 13px;
+            color: var(--color-text-secondary);
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-16);
+        }
+        
+        @media (max-width: 640px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            body {
+                padding: var(--space-16);
+            }
+        }
+        
+        .rate-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: rgba(var(--color-teal-500-rgb), 0.15);
+            color: var(--color-primary);
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: var(--space-8);
+        }
+        
+        .period-card {
+            background-color: var(--color-background);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-base);
+            padding: var(--space-16);
+            margin-bottom: var(--space-16);
+            position: relative;
+        }
+        
+        .period-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-12);
+        }
+        
+        .period-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--color-text);
+        }
+        
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-size: 20px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .remove-btn:hover {
+            background-color: rgba(192, 21, 47, 0.1);
+            color: rgba(192, 21, 47, 1);
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: var(--space-12);
+        }
+        
+        @media (max-width: 640px) {
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 Калькулятор MonoBank</h1>
+        <p class="subtitle">Розрахунок процентів за кредитним лімітом</p>
+        
+        <div class="tabs">
+            <button class="tab active" data-tab="rate31">Ставка 3.1%</button>
+            <button class="tab" data-tab="rate62">Ставка 6.2%</button>
+            <button class="tab" data-tab="installment">Розстрочка</button>
+        </div>
+        
+        <!-- Ставка 3.1% -->
+        <div class="tab-content active" id="rate31">
+            <div class="card">
+                <h2 style="margin-bottom: var(--space-16); font-size: 20px;">
+                    Розрахунок процентів <span class="rate-badge">3.1%</span>
+                </h2>
+                
+                <div id="periods31"></div>
+                
+                <button class="btn" onclick="addPeriod31()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
+                    + Додати період
+                </button>
+                
+                <button class="btn" onclick="calculate31()">Розрахувати</button>
+                
+                <div class="result-section" id="result31" style="display: none;">
+                    <div class="result-item">
+                        <span class="result-label">Нараховано відсотків</span>
+                        <span class="result-value highlight" id="interest31">0 грн</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Всього до сплати</span>
+                        <span class="result-value" id="total31">0 грн</span>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    ℹ️ Формула: (Сума × Кількість днів × 3.1% × 12) / 365 / 100 для кожного періоду
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ставка 6.2% -->
+        <div class="tab-content" id="rate62">
+            <div class="card">
+                <h2 style="margin-bottom: var(--space-16); font-size: 20px;">
+                    Розрахунок процентів <span class="rate-badge">6.2%</span>
+                </h2>
+                
+                <div id="periods62"></div>
+                
+                <button class="btn" onclick="addPeriod62()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
+                    + Додати період
+                </button>
+                
+                <button class="btn" onclick="calculate62()">Розрахувати</button>
+                
+                <div class="result-section" id="result62" style="display: none;">
+                    <div class="result-item">
+                        <span class="result-label">Нараховано відсотків</span>
+                        <span class="result-value highlight" id="interest62">0 грн</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Всього до сплати</span>
+                        <span class="result-value" id="total62">0 грн</span>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    ℹ️ Формула: (Сума × Кількість днів × 6.2% × 12) / 365 / 100 для кожного періоду
+                </div>
+            </div>
+        </div>
+        
+        <!-- Розстрочка -->
+        <div class="tab-content" id="installment">
+            <div class="card">
+                <h2 style="margin-bottom: var(--space-16); font-size: 20px;">
+                    Розрахунок розстрочки <span class="rate-badge">1.9%/міс</span>
+                </h2>
+                
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="amountInst">Сума розстрочки (грн)</label>
+                        <input type="number" id="amountInst" value="30000" step="0.01" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="monthsInst">Кількість місяців</label>
+                        <input type="number" id="monthsInst" value="6" min="1" max="24">
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="calculateInstallment()">Розрахувати</button>
+                
+                <div class="result-section" id="resultInst" style="display: none;">
+                    <div class="result-item">
+                        <span class="result-label">Щомісячний платіж</span>
+                        <span class="result-value highlight" id="monthlyPayment">0 грн</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Комісія за місяць</span>
+                        <span class="result-value" id="monthlyFee">0 грн</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Загальна переплата</span>
+                        <span class="result-value" id="totalOverpayment">0 грн</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Всього до сплати</span>
+                        <span class="result-value" id="totalInstallment">0 грн</span>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    ℹ️ Комісія 1.9% від суми розстрочки щомісяця
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let periodCounter31 = 0;
+        let periodCounter62 = 0;
+        
+        // Перемикання вкладок
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Додавання періоду для 3.1%
+        function addPeriod31() {
+            periodCounter31++;
+            const periodsDiv = document.getElementById('periods31');
+            const periodCard = document.createElement('div');
+            periodCard.className = 'period-card';
+            periodCard.id = 'period31-' + periodCounter31;
+            periodCard.innerHTML = `
+                <div class="period-header">
+                    <span class="period-title">Період ${periodCounter31}</span>
+                    <button class="remove-btn" onclick="removePeriod31(${periodCounter31})" title="Видалити період">×</button>
+                </div>
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>День від</label>
+                        <input type="number" class="debt31-from" value="1" min="1" max="31">
+                    </div>
+                    <div class="form-group">
+                        <label>День до</label>
+                        <input type="number" class="debt31-to" value="10" min="1" max="31">
+                    </div>
+                    <div class="form-group">
+                        <label>Сума боргу (грн)</label>
+                        <input type="number" class="debt31-amount" value="25000" step="0.01" min="0">
+                    </div>
+                </div>
+            `;
+            periodsDiv.appendChild(periodCard);
+        }
+        
+        // Видалення періоду для 3.1%
+        function removePeriod31(id) {
+            const period = document.getElementById('period31-' + id);
+            if (period) {
+                period.remove();
+            }
+        }
+        
+        // Додавання періоду для 6.2%
+        function addPeriod62() {
+            periodCounter62++;
+            const periodsDiv = document.getElementById('periods62');
+            const periodCard = document.createElement('div');
+            periodCard.className = 'period-card';
+            periodCard.id = 'period62-' + periodCounter62;
+            periodCard.innerHTML = `
+                <div class="period-header">
+                    <span class="period-title">Період ${periodCounter62}</span>
+                    <button class="remove-btn" onclick="removePeriod62(${periodCounter62})" title="Видалити період">×</button>
+                </div>
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>День від</label>
+                        <input type="number" class="debt62-from" value="1" min="1" max="31">
+                    </div>
+                    <div class="form-group">
+                        <label>День до</label>
+                        <input type="number" class="debt62-to" value="10" min="1" max="31">
+                    </div>
+                    <div class="form-group">
+                        <label>Сума боргу (грн)</label>
+                        <input type="number" class="debt62-amount" value="25000" step="0.01" min="0">
+                    </div>
+                </div>
+            `;
+            periodsDiv.appendChild(periodCard);
+        }
+        
+        // Видалення періоду для 6.2%
+        function removePeriod62(id) {
+            const period = document.getElementById('period62-' + id);
+            if (period) {
+                period.remove();
+            }
+        }
+        
+        // Розрахунок для 3.1%
+        function calculate31() {
+            const periodsDiv = document.getElementById('periods31');
+            const periodCards = periodsDiv.querySelectorAll('.period-card');
+            
+            if (periodCards.length === 0) {
+                alert('Додайте хоча б один період для розрахунку');
+                return;
+            }
+            
+            let totalInterest = 0;
+            let totalDebt = 0;
+            
+            periodCards.forEach(card => {
+                const from = parseInt(card.querySelector('.debt31-from').value) || 0;
+                const to = parseInt(card.querySelector('.debt31-to').value) || 0;
+                const amount = parseFloat(card.querySelector('.debt31-amount').value) || 0;
+                
+                const days = to - from + 1;
+                if (days > 0) {
+                    const interest = (amount * days * 3.1 * 12) / 365 / 100;
+                    totalInterest += interest;
+                    totalDebt = Math.max(totalDebt, amount);
+                }
+            });
+            
+            const total = totalDebt + totalInterest;
+            
+            document.getElementById('interest31').textContent = totalInterest.toFixed(2) + ' грн';
+            document.getElementById('total31').textContent = total.toFixed(2) + ' грн';
+            document.getElementById('result31').style.display = 'block';
+        }
+        
+        // Розрахунок для 6.2%
+        function calculate62() {
+            const periodsDiv = document.getElementById('periods62');
+            const periodCards = periodsDiv.querySelectorAll('.period-card');
+            
+            if (periodCards.length === 0) {
+                alert('Додайте хоча б один період для розрахунку');
+                return;
+            }
+            
+            let totalInterest = 0;
+            let totalDebt = 0;
+            
+            periodCards.forEach(card => {
+                const from = parseInt(card.querySelector('.debt62-from').value) || 0;
+                const to = parseInt(card.querySelector('.debt62-to').value) || 0;
+                const amount = parseFloat(card.querySelector('.debt62-amount').value) || 0;
+                
+                const days = to - from + 1;
+                if (days > 0) {
+                    const interest = (amount * days * 6.2 * 12) / 365 / 100;
+                    totalInterest += interest;
+                    totalDebt = Math.max(totalDebt, amount);
+                }
+            });
+            
+            const total = totalDebt + totalInterest;
+            
+            document.getElementById('interest62').textContent = totalInterest.toFixed(2) + ' грн';
+            document.getElementById('total62').textContent = total.toFixed(2) + ' грн';
+            document.getElementById('result62').style.display = 'block';
+        }
+        
+        // Розрахунок розстрочки
+        function calculateInstallment() {
+            const amount = parseFloat(document.getElementById('amountInst').value) || 0;
+            const months = parseInt(document.getElementById('monthsInst').value) || 0;
+            
+            const monthlyFee = amount * 0.019;
+            const monthlyPayment = (amount / months) + monthlyFee;
+            const totalOverpayment = monthlyFee * months;
+            const totalAmount = amount + totalOverpayment;
+            
+            document.getElementById('monthlyPayment').textContent = monthlyPayment.toFixed(2) + ' грн';
+            document.getElementById('monthlyFee').textContent = monthlyFee.toFixed(2) + ' грн';
+            document.getElementById('totalOverpayment').textContent = totalOverpayment.toFixed(2) + ' грн';
+            document.getElementById('totalInstallment').textContent = totalAmount.toFixed(2) + ' грн';
+            document.getElementById('resultInst').style.display = 'block';
+        }
+        
+        // Ініціалізація з одним періодом для кожної ставки
+        addPeriod31();
+        addPeriod62();
+        
+        // Автоматичний розрахунок при зміні значень для розстрочки
+        ['amountInst', 'monthsInst'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                if (document.getElementById('resultInst').style.display === 'block') {
+                    calculateInstallment();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
