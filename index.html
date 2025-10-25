@@ -356,15 +356,15 @@
                 </button>
                 
                 <h3 style="margin: var(--space-20) 0 var(--space-12) 0; font-size: 16px; font-weight: 600;">
-                    Овердрафт
+                    Сума перевищеного встановленого ліміту
                 </h3>
                 <div class="form-group">
-                    <label for="overdraftEnd">Сума овердрафту на кінець місяця (грн)</label>
+                    <label for="overdraftEnd">Сума перевищеного ліміту на кінець місяця (грн)</label>
                     <input type="number" id="overdraftEnd" value="0" step="0.01" min="0">
                 </div>
                 <div id="periodsOverdraft"></div>
                 <button class="btn" onclick="addPeriodOverdraft()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
-                    + Додати період овердрафту
+                    + Додати період перевищення ліміту
                 </button>
                 
                 <button class="btn" onclick="calculateCredit()">Розрахувати все разом</button>
@@ -379,7 +379,7 @@
                         <span class="result-value" id="interest62">0 грн</span>
                     </div>
                     <div class="result-item">
-                        <span class="result-label">Відсотки овердрафт (ставка: <span id="appliedRate">0%</span>)</span>
+                        <span class="result-label">Відсотки за перевищення ліміту (ставка: <span id="appliedRate">0%</span>)</span>
                         <span class="result-value" id="interestOverdraft">0 грн</span>
                     </div>
                     <div class="result-item" style="border-top: 2px solid var(--color-border); padding-top: var(--space-16); margin-top: var(--space-8);">
@@ -389,7 +389,7 @@
                 </div>
                 
                 <div class="info-box">
-                    ℹ️ Формула: (Сума × Кількість днів × Ставка% × 12) / 365(366) / 100. Овердрафт: якщо на кінець місяця &lt; 1000 грн — 3.1%, якщо ≥ 1000 грн — 6.2%
+                    ℹ️ Формула: (Сума × Кількість днів × Ставка% × 12) / 365(366) / 100. Перевищення ліміту: якщо на кінець місяця &lt; 1000 грн — 3.1%, якщо ≥ 1000 грн — 6.2%
                 </div>
             </div>
         </div>
@@ -642,7 +642,7 @@
                         <input type="number" class="overdraft-to" value="10" min="1" max="31">
                     </div>
                     <div class="form-group">
-                        <label>Сума овердрафту (грн)</label>
+                        <label>Сума перевищення (грн)</label>
                         <input type="number" class="overdraft-amount" value="2000" step="0.01" min="0">
                     </div>
                 </div>
