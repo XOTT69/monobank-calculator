@@ -7,679 +7,630 @@
     <style>
         :root {
             --color-white: rgba(255, 255, 255, 1);
-            --color-black: rgba(0, 0, 0, 1);
-            --color-cream-50: rgba(252, 252, 249, 1);
-            --color-cream-100: rgba(255, 255, 253, 1);
-            --color-gray-200: rgba(245, 245, 245, 1);
-            --color-gray-300: rgba(167, 169, 169, 1);
-            --color-gray-400: rgba(119, 124, 124, 1);
-            --color-slate-500: rgba(98, 108, 113, 1);
-            --color-brown-600: rgba(94, 82, 64, 1);
-            --color-charcoal-700: rgba(31, 33, 33, 1);
-            --color-charcoal-800: rgba(38, 40, 40, 1);
-            --color-slate-900: rgba(19, 52, 59, 1);
-            --color-teal-300: rgba(50, 184, 198, 1);
-            --color-teal-400: rgba(45, 166, 178, 1);
-            --color-teal-500: rgba(33, 128, 141, 1);
-            --color-teal-600: rgba(29, 116, 128, 1);
-            --color-brown-600-rgb: 94, 82, 64;
-            --color-teal-500-rgb: 33, 128, 141;
-            --color-slate-900-rgb: 19, 52, 59;
+            --color-background: #fcfcf9;
+            --color-surface: #fffffd;
+            --color-text: #13343b;
+            --color-text-secondary: #626c71;
+            --color-primary: #21808d;
+            --color-primary-hover: #1d7480;
+            --color-border: rgba(94, 82, 64, 0.2);
+            --color-card-border: rgba(94, 82, 64, 0.12);
+            --color-error: #e54d4d;
+            --color-success: #27ae60;
+            --color-black-card: #111;
+            --color-iron-card: #5e6b75;
             
-            --color-background: var(--color-cream-50);
-            --color-surface: var(--color-cream-100);
-            --color-text: var(--color-slate-900);
-            --color-text-secondary: var(--color-slate-500);
-            --color-primary: var(--color-teal-500);
-            --color-primary-hover: var(--color-teal-600);
-            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
-            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
-            
+            --space-xs: 4px; --space-sm: 8px; --space-md: 12px; --space-lg: 16px; --space-xl: 20px;
+            --radius-base: 6px; --radius-lg: 8px;
             --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            --space-8: 8px;
-            --space-12: 12px;
-            --space-16: 16px;
-            --space-20: 20px;
-            --space-24: 24px;
-            --space-32: 32px;
-            --radius-base: 8px;
-            --radius-lg: 12px;
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
         }
         
         @media (prefers-color-scheme: dark) {
             :root {
-                --color-gray-400-rgb: 119, 124, 124;
-                --color-teal-300-rgb: 50, 184, 198;
-                --color-gray-300-rgb: 167, 169, 169;
-                --color-gray-200-rgb: 245, 245, 245;
-                
-                --color-background: var(--color-charcoal-700);
-                --color-surface: var(--color-charcoal-800);
-                --color-text: var(--color-gray-200);
-                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
-                --color-primary: var(--color-teal-300);
-                --color-primary-hover: var(--color-teal-400);
-                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
-                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-background: #1f2121; --color-surface: #262828;
+                --color-text: #f5f5f5; --color-text-secondary: #a7a9a9;
+                --color-primary: #32b8c6; --color-primary-hover: #2da6b2;
+                --color-border: rgba(119, 124, 124, 0.3); --color-card-border: rgba(119, 124, 124, 0.2);
             }
         }
         
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { overflow-y: scroll; }
+        body { font-family: var(--font-family-base); background-color: var(--color-background); color: var(--color-text); padding: var(--space-lg); line-height: 1.4; font-size: 14px; }
+        .container { max-width: 960px; margin: 0 auto; }
         
-        body {
-            font-family: var(--font-family-base);
-            background-color: var(--color-background);
-            color: var(--color-text);
-            padding: var(--space-24);
-            line-height: 1.5;
-        }
+        h1 { font-size: 22px; font-weight: 700; margin-bottom: 2px; color: var(--color-text); }
+        .subtitle { color: var(--color-text-secondary); margin-bottom: var(--space-lg); font-size: 13px; }
+        h2 { font-size: 18px; margin: 0; font-weight: 600; display: flex; align-items: center; } 
+        h3 { font-size: 15px; margin: var(--space-md) 0 var(--space-sm) 0; font-weight: 600; }
         
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        .tabs { display: flex; gap: var(--space-sm); margin-bottom: var(--space-lg); border-bottom: 1px solid var(--color-border); }
+        .tab { padding: var(--space-sm) var(--space-lg); background: none; border: none; color: var(--color-text-secondary); cursor: pointer; font-size: 14px; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s; }
+        .tab:hover { color: var(--color-text); }
+        .tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
         
-        h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: var(--space-8);
-            color: var(--color-text);
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
         
-        .subtitle {
-            color: var(--color-text-secondary);
-            margin-bottom: var(--space-32);
-            font-size: 14px;
-        }
+        .card { background-color: var(--color-surface); border-radius: var(--radius-lg); border: 1px solid var(--color-card-border); padding: var(--space-lg); box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: var(--space-lg); }
+        .card-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-lg); min-height: 32px; flex-wrap: wrap; gap: 8px; }
+        .form-group { margin-bottom: var(--space-md); }
+        label { display: block; margin-bottom: 4px; font-weight: 500; font-size: 13px; color: var(--color-text); }
         
-        .tabs {
-            display: flex;
-            gap: var(--space-8);
-            margin-bottom: var(--space-24);
-            border-bottom: 1px solid var(--color-border);
-        }
+        input[type="number"], input[type="date"], select { width: 100%; padding: 6px 10px; border: 1px solid var(--color-border); border-radius: var(--radius-base); font-size: 14px; background-color: var(--color-background); color: var(--color-text); transition: border-color 0.2s; height: 36px; font-family: inherit; }
+        input[type="number"]:focus, input[type="date"]:focus, select:focus { outline: none; border-color: var(--color-primary); }
+        input[type="number"].input-error { border-color: var(--color-error); background-color: rgba(229, 77, 77, 0.05); }
+
+        .slider-container { width: 100%; padding: 10px 0; position: relative; }
+        .slider-value-display { font-size: 24px; font-weight: 700; color: var(--color-text); margin-bottom: 8px; }
+        .slider-labels { display: flex; justify-content: space-between; color: var(--color-text-secondary); font-size: 12px; margin-top: 4px; }
+        input[type=range] { -webkit-appearance: none; width: 100%; height: 4px; background: #e6e6e6; border-radius: 2px; outline: none; padding: 0; margin: 0; cursor: pointer; border: none; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 2px solid #ea5b5b; cursor: pointer; margin-top: -8px; position: relative; z-index: 2; }
         
-        .tab {
-            padding: var(--space-12) var(--space-24);
-            background: none;
-            border: none;
-            color: var(--color-text-secondary);
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-        }
+        .btn { width: 100%; padding: 8px 16px; background-color: var(--color-primary); color: white; border: none; border-radius: var(--radius-base); font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; height: 36px; }
+        .btn:hover { background-color: var(--color-primary-hover); }
+        .btn-ghost { background-color: rgba(33, 128, 141, 0.1); color: var(--color-primary); margin-bottom: var(--space-md); height: 32px; padding: 0 12px; font-size: 13px; }
+        .btn-ghost:hover { background-color: rgba(33, 128, 141, 0.2); }
+        .btn-outline { background-color: transparent; border: 1px solid var(--color-border); color: var(--color-text-secondary); font-weight: 500; }
         
-        .tab:hover {
-            color: var(--color-text);
-        }
+        .result-section { margin-top: var(--space-lg); padding: var(--space-md); background-color: var(--color-background); border-radius: var(--radius-base); border: 1px solid var(--color-card-border); }
+        .result-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--color-border); align-items: center; }
+        .result-item:last-child { border-bottom: none; }
+        .result-label { color: var(--color-text-secondary); font-size: 14px; }
+        .result-value { font-weight: 600; font-size: 16px; color: var(--color-text); }
+        .result-value.highlight { color: var(--color-primary); font-size: 18px; }
+        .result-value.success { color: var(--color-success); }
         
-        .tab.active {
-            color: var(--color-primary);
-            border-bottom-color: var(--color-primary);
-        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-sm); }
+        @media (max-width: 640px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
         
-        .tab-content {
-            display: none;
-        }
+        .rate-badge { display: inline-block; padding: 2px 8px; background-color: rgba(33, 128, 141, 0.15); color: var(--color-primary); border-radius: 4px; font-size: 12px; font-weight: 600; margin-left: var(--space-sm); }
+        .period-card { background-color: var(--color-background); border: 1px solid var(--color-card-border); border-radius: var(--radius-base); padding: var(--space-md); margin-bottom: var(--space-md); }
+        .period-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); }
+        .period-title { font-weight: 600; font-size: 13px; color: var(--color-text); }
+        .remove-btn { background: none; border: none; color: var(--color-text-secondary); cursor: pointer; font-size: 18px; padding: 0; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
+        .remove-btn:hover { background-color: rgba(192, 21, 47, 0.1); color: rgba(192, 21, 47, 1); }
+
+        .details-log-container { margin-top: var(--space-md); border-top: 1px solid var(--color-border); padding-top: var(--space-md); }
+        .details-log { background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-base); padding: var(--space-md); font-family: monospace; font-size: 12px; color: var(--color-text-secondary); white-space: pre-wrap; max-height: 250px; overflow-y: auto; margin-top: var(--space-sm); }
+        .copy-btn-container { display: flex; justify-content: flex-end; margin-top: 4px; }
+        .text-link { color: var(--color-primary); cursor: pointer; font-size: 13px; border: none; background: none; padding: 0; text-decoration: underline; }
+
+        .kdz-table-container { overflow-x: auto; border: 1px solid var(--color-border); border-radius: var(--radius-base); margin-top: var(--space-md); }
+        .kdz-table { width: 100%; border-collapse: collapse; min-width: 500px; font-size: 13px; }
+        .kdz-table th { background-color: rgba(33, 128, 141, 0.08); padding: 6px 8px; text-align: left; font-weight: 600; color: var(--color-text); border-bottom: 1px solid var(--color-border); }
+        .kdz-table td { padding: 2px 8px; border-bottom: 1px solid var(--color-border); vertical-align: middle; color: var(--color-text); height: 32px; }
+        .kdz-table tr:last-child td { border-bottom: none; }
+        .kdz-input { width: 100%; padding: 2px 6px; font-size: 13px; text-align: right; border: 1px solid var(--color-border); border-radius: 4px; height: 26px; margin: 0; }
+        .kdz-input:focus { border-color: var(--color-primary); outline: none; }
+        .kdz-input.error { border-color: var(--color-error); background-color: rgba(229, 77, 77, 0.1); }
+        .text-dim { color: var(--color-text-secondary); font-size: 12px; }
+        .text-bold { font-weight: 600; }
+        .effective-val { font-size: 10px; color: var(--color-text-secondary); display: block; line-height: 1; text-align: right; margin-top: 2px; }
+        .commission-val { color: var(--color-error); }
         
-        .tab-content.active {
-            display: block;
-        }
+        .checkbox-cell { text-align: center; }
+        .custom-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--color-primary); }
+
+        .error-message { color: var(--color-error); font-size: 12px; font-weight: 600; margin-top: 4px; display: none; }
+        .error-message.visible { display: block; }
+        .inline-error { color: var(--color-error); font-size: 11px; margin-top: 2px; display: none; }
         
-        .card {
-            background-color: var(--color-surface);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--color-card-border);
-            padding: var(--space-24);
-            box-shadow: var(--shadow-md);
-            margin-bottom: var(--space-24);
-        }
-        
-        .form-group {
-            margin-bottom: var(--space-20);
-        }
-        
-        label {
-            display: block;
-            margin-bottom: var(--space-8);
-            font-weight: 500;
-            font-size: 14px;
-            color: var(--color-text);
-        }
-        
-        input[type="number"] {
-            width: 100%;
-            padding: var(--space-12);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-base);
-            font-size: 15px;
-            background-color: var(--color-background);
-            color: var(--color-text);
-            transition: border-color 0.2s;
-        }
-        
-        input[type="number"]:focus {
-            outline: none;
-            border-color: var(--color-primary);
-        }
-        
-        .btn {
-            width: 100%;
-            padding: var(--space-12) var(--space-24);
-            background-color: var(--color-primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-base);
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .btn:hover {
-            background-color: var(--color-primary-hover);
-        }
-        
-        .result-section {
-            margin-top: var(--space-24);
-            padding: var(--space-20);
-            background-color: var(--color-background);
-            border-radius: var(--radius-base);
-            border: 1px solid var(--color-card-border);
-        }
-        
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            padding: var(--space-12) 0;
-            border-bottom: 1px solid var(--color-border);
-        }
-        
-        .result-item:last-child {
-            border-bottom: none;
-        }
-        
-        .result-label {
-            color: var(--color-text-secondary);
-            font-size: 14px;
-        }
-        
-        .result-value {
-            font-weight: 600;
-            font-size: 16px;
-            color: var(--color-text);
-        }
-        
-        .result-value.highlight {
-            color: var(--color-primary);
-            font-size: 18px;
-        }
-        
-        .info-box {
-            background-color: rgba(var(--color-teal-500-rgb), 0.08);
-            border-left: 3px solid var(--color-primary);
-            padding: var(--space-16);
-            border-radius: var(--radius-base);
-            margin-top: var(--space-16);
-            font-size: 13px;
-            color: var(--color-text-secondary);
-        }
-        
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-16);
-        }
-        
-        @media (max-width: 640px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            
-            body {
-                padding: var(--space-16);
-            }
-        }
-        
-        .rate-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            background-color: rgba(var(--color-teal-500-rgb), 0.15);
-            color: var(--color-primary);
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-left: var(--space-8);
-        }
-        
-        .period-card {
-            background-color: var(--color-background);
-            border: 1px solid var(--color-card-border);
-            border-radius: var(--radius-base);
-            padding: var(--space-16);
-            margin-bottom: var(--space-16);
-            position: relative;
-        }
-        
-        .period-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--space-12);
-        }
-        
-        .period-title {
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--color-text);
-        }
-        
-        .remove-btn {
-            background: none;
-            border: none;
-            color: var(--color-text-secondary);
-            cursor: pointer;
-            font-size: 20px;
-            padding: 0;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            transition: all 0.2s;
-        }
-        
-        .remove-btn:hover {
-            background-color: rgba(192, 21, 47, 0.1);
-            color: rgba(192, 21, 47, 1);
-        }
-        
-        .grid-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: var(--space-12);
-        }
-        
-        @media (max-width: 640px) {
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
-        }
+        .card-type-toggle { display: inline-flex; background: var(--color-background); border: 1px solid var(--color-border); border-radius: 20px; padding: 2px; height: 32px; }
+        .toggle-option { padding: 0 16px; display: flex; align-items: center; cursor: pointer; border-radius: 16px; font-size: 12px; font-weight: 600; color: var(--color-text-secondary); transition: all 0.2s; }
+        .toggle-option.selected-black { background-color: var(--color-black-card); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        .toggle-option.selected-iron { background-color: var(--color-iron-card); color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🏦 Калькулятор monobank</h1>
-        <p class="subtitle">Розрахунок процентів за кредитним лімітом</p>
+        <p class="subtitle" id="mainSubtitle">Розрахунок відсотків за кредитним лімітом</p>
         
         <div class="tabs">
-            <button class="tab active" data-tab="credit">Кредитний ліміт</button>
-            <button class="tab" data-tab="installment">Розстрочка</button>
+            <button class="tab active" data-tab="credit" data-sub="Розрахунок відсотків за кредитним лімітом">Кредитний ліміт</button>
+            <button class="tab" data-tab="installment" data-sub="Розрахунок щомісячних платежів та комісії">Розстрочка</button>
+            <button class="tab" data-tab="kdz" data-sub="Розрахунок вартості кредиту до завтра">КДЗ</button>
         </div>
         
-        <!-- Кредитний ліміт -->
+        <!-- CREDIT -->
         <div class="tab-content active" id="credit">
             <div class="card">
-                <h2 style="margin-bottom: var(--space-16); font-size: 20px;">
-                    Розрахунок процентів за кредитним лімітом
-                </h2>
-                
-                <div class="form-group">
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="leapYearCredit" style="width: auto;">
-                        Високосний рік (366 днів)
-                    </label>
+                <div class="card-header-row">
+                    <div style="display:flex; align-items:center; gap: 12px;">
+                        <h2>Кредитний ліміт</h2>
+                        <div class="card-type-toggle">
+                            <div class="toggle-option selected-black" id="optBlack" onclick="switchCard('black')">Black</div>
+                            <div class="toggle-option" id="optIron" onclick="switchCard('iron')">Platinum</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: var(--space-md); align-items: center;">
+                        <label style="display: flex; align-items: center; gap: 6px; margin: 0; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" id="leapYearCredit" style="width: auto;"> 366 днів
+                        </label>
+                        <button class="btn btn-ghost" style="width: auto; margin: 0; padding: 0 8px; height: 28px; font-size: 12px;" onclick="resetCredit()">🔄 Очистити все</button>
+                    </div>
                 </div>
                 
-                <h3 style="margin: var(--space-20) 0 var(--space-12) 0; font-size: 16px; font-weight: 600;">
-                    Ставка 3.1%
-                </h3>
+                <h3 id="labelStandard">Ставка 3.1%</h3>
                 <div id="periods31"></div>
-                <button class="btn" onclick="addPeriod31()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
-                    + Додати період 3.1%
-                </button>
+                <button class="btn btn-ghost" onclick="addPeriod31()">+ Додати період (стандартна)</button>
                 
-                <h3 style="margin: var(--space-20) 0 var(--space-12) 0; font-size: 16px; font-weight: 600;">
-                    Ставка 6.2%
-                </h3>
+                <h3 id="labelPenalty">Ставка 6.2%</h3>
                 <div id="periods62"></div>
-                <button class="btn" onclick="addPeriod62()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
-                    + Додати період 6.2%
-                </button>
+                <button class="btn btn-ghost" onclick="addPeriod62()">+ Додати період (підвищена)</button>
                 
-                <h3 style="margin: var(--space-20) 0 var(--space-12) 0; font-size: 16px; font-weight: 600;">
-                    Сума перевищеного встановленого ліміту
-                </h3>
+                <h3>Сума перевищеного ліміту</h3>
                 <div class="form-group">
-                    <label>Сума на кінець місяця</label>
-                    <div style="display: flex; gap: var(--space-12);">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: var(--space-12); border: 1px solid var(--color-border); border-radius: var(--radius-base); flex: 1; background-color: var(--color-background);">
-                            <input type="radio" name="overdraftRange" value="less" checked style="width: auto;">
-                            Менше 1000 грн (3.1%)
+                    <div style="display: flex; gap: var(--space-md);">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 6px 12px; border: 1px solid var(--color-border); border-radius: var(--radius-base); flex: 1; background-color: var(--color-background); height: 36px; margin: 0;">
+                            <input type="radio" name="overdraftRange" value="less" checked style="width: auto;"> 
+                            <span id="labelOdLess">Менше 1000 грн (3.1%)</span>
                         </label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: var(--space-12); border: 1px solid var(--color-border); border-radius: var(--radius-base); flex: 1; background-color: var(--color-background);">
-                            <input type="radio" name="overdraftRange" value="more" style="width: auto;">
-                            1000 грн і більше (6.2%)
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 6px 12px; border: 1px solid var(--color-border); border-radius: var(--radius-base); flex: 1; background-color: var(--color-background); height: 36px; margin: 0;">
+                            <input type="radio" name="overdraftRange" value="more" style="width: auto;"> 
+                            <span id="labelOdMore">≥ 1000 грн (6.2%)</span>
                         </label>
                     </div>
                 </div>
                 <div id="periodsOverdraft"></div>
-                <button class="btn" onclick="addPeriodOverdraft()" style="background-color: rgba(var(--color-teal-500-rgb), 0.15); color: var(--color-primary); margin-bottom: var(--space-16);">
-                    + Додати період перевищення ліміту
-                </button>
+                <button class="btn btn-ghost" onclick="addPeriodOverdraft()">+ Додати період перевищення</button>
                 
-                <button class="btn" onclick="calculateCredit()">Розрахувати все разом</button>
+                <button class="btn" onclick="calculateCredit()" style="margin-top: var(--space-sm);">Розрахувати все разом</button>
                 
                 <div class="result-section" id="resultCredit" style="display: none;">
                     <div class="result-item">
-                        <span class="result-label">Відсотки 3.1%</span>
-                        <span class="result-value" id="interest31">0 грн</span>
+                        <span class="result-label" id="resLabelStandard">Відсотки (стандарт)</span> <span class="result-value" id="interest31">0 грн</span>
                     </div>
                     <div class="result-item">
-                        <span class="result-label">Відсотки 6.2%</span>
-                        <span class="result-value" id="interest62">0 грн</span>
+                        <span class="result-label" id="resLabelPenalty">Відсотки (підвищена)</span> <span class="result-value" id="interest62">0 грн</span>
                     </div>
-                    <div class="result-item" style="border-top: 2px solid var(--color-border); padding-top: var(--space-16); margin-top: var(--space-8);">
-                        <span class="result-label" style="font-weight: 600;">Всього за кредитний ліміт</span>
-                        <span class="result-value highlight" id="totalInterest">0 грн</span>
+                    <div class="result-item" style="border-top: 2px solid var(--color-border); padding-top: var(--space-sm); margin-top: 4px;">
+                        <span class="result-label" style="font-weight: 600;">Всього за кредитний ліміт</span> <span class="result-value highlight" id="totalInterest">0 грн</span>
                     </div>
-                    <div class="result-item" style="margin-top: var(--space-16); padding-top: var(--space-16); border-top: 1px solid var(--color-border);">
-                        <span class="result-label">Відсотки за перевищення ліміту (ставка: <span id="appliedRate">0%</span>)</span>
-                        <span class="result-value" id="interestOverdraft">0 грн</span>
+                    <div class="result-item" style="margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--color-border);">
+                        <span class="result-label">Овердрафт (<span id="appliedRate">0%</span>)</span> <span class="result-value" id="interestOverdraft">0 грн</span>
                     </div>
-                </div>
-                
-                <div class="info-box">
-                    ℹ️ Формула: (Сума × Кількість днів × Ставка% × 12) / 365(366) / 100. Перевищення ліміту: якщо на кінець місяця &lt; 1000 грн — 3.1%, якщо ≥ 1000 грн — 6.2%
+                    <div class="details-log-container">
+                        <button class="text-link" onclick="toggleDetails()">📜 Показати детальну розшифровку</button>
+                        <div id="detailsArea" style="display: none;">
+                            <div class="details-log" id="detailsLogText"></div>
+                            <div class="copy-btn-container">
+                                <button class="btn btn-outline" style="width: auto; height: 28px; padding: 0 12px; font-size: 12px;" onclick="copyDetails()">Копіювати текст</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <!-- Розстрочка -->
+        <!-- INSTALLMENT -->
         <div class="tab-content" id="installment">
             <div class="card">
-                <h2 style="margin-bottom: var(--space-16); font-size: 20px;">
-                    Розрахунок розстрочки <span class="rate-badge">1.9%/міс</span>
-                </h2>
+                <div class="card-header-row">
+                    <h2>Розстрочка <span class="rate-badge">1.9%/міс</span></h2>
+                    <button class="btn btn-ghost" style="width: auto; margin: 0; padding: 0 8px; height: 28px; font-size: 12px;" onclick="resetInst()">🔄 Очистити</button>
+                </div>
+                <div class="form-group">
+                    <label for="amountInst">Сума (макс 400 000 грн)</label>
+                    <input type="number" id="amountInst" value="30000" step="0.01" min="0" max="400000" oninput="liveUpdateInst()">
+                    <div id="instError" class="error-message">Максимальна сума розстрочки до 400 000 грн!</div>
+                </div>
+                <div class="form-group" style="margin-top: var(--space-xl);">
+                    <label>Кількість платежів</label>
+                    <div class="slider-container">
+                        <div class="slider-value-display" id="monthsDisplay">6</div>
+                        <input type="range" id="monthsInst" min="3" max="24" value="6" oninput="updateSliderVisuals()">
+                        <div class="slider-labels"><span>3 платежі</span><span>24 платежі</span></div>
+                    </div>
+                </div>
+                <button class="btn" onclick="calculateInstallment()" style="margin-top: var(--space-sm);">Розрахувати</button>
+                <div class="result-section" id="resultInst" style="display: none;">
+                    <div class="result-item"><span class="result-label">Щомісячний платіж</span><span class="result-value highlight" id="monthlyPayment">0 грн</span></div>
+                    <div class="result-item"><span class="result-label">Комісія за місяць</span><span class="result-value" id="monthlyFee">0 грн</span></div>
+                    <div class="result-item"><span class="result-label">Загальна переплата</span><span class="result-value" id="totalOverpayment">0 грн</span></div>
+                    <div class="result-item"><span class="result-label">Всього до сплати</span><span class="result-value" id="totalInstallment">0 грн</span></div>
+                    <div class="details-log-container">
+                        <button class="text-link" onclick="toggleDetailsInst()">📜 Показати графік платежів</button>
+                        <div id="detailsAreaInst" style="display: none;">
+                            <div class="details-log" id="detailsLogInst"></div>
+                            <div class="copy-btn-container"><button class="btn btn-outline" style="width: auto; height: 28px; padding: 0 12px; font-size: 12px;" onclick="copyDetailsInst()">Копіювати графік</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KDZ -->
+        <div class="tab-content" id="kdz">
+            <div class="card">
+                <div class="card-header-row">
+                    <h2>Кредит «До завтра»</h2>
+                    <button class="btn btn-ghost" style="width: auto; margin: 0; padding: 0 8px; height: 28px; font-size: 12px;" onclick="resetKdz()">🔄 Очистити все</button>
+                </div>
+                <div class="grid-3" style="align-items: flex-start; margin-bottom: var(--space-lg);">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Тіло (грн, мін 1000)</label>
+                        <input type="number" id="kdzBody" value="1000" onblur="validateKdzInputs(true)" oninput="handleKdzInput()">
+                        <div class="inline-error" id="errBody">Мін. сума 1000 грн</div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Днів (мін 2, макс 30)</label>
+                        <input type="number" id="kdzDays" value="2" min="2" max="30" onblur="validateKdzInputs(true)" oninput="handleKdzInput()">
+                        <div class="inline-error" id="errDays">Мін. 2 дні</div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Ставка/день</label>
+                        <select id="kdzRate" onchange="recalculateKdz()"><option value="0.3">0.3%</option><option value="0.5">0.5%</option></select>
+                    </div>
+                </div>
+
+                <div class="kdz-table-container">
+                    <table class="kdz-table" id="kdzTable">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center; width: 40px;">День</th>
+                                <th>Тіло (ранок)</th> 
+                                <th style="background-color: rgba(94, 82, 64, 0.04);">Погашення тіла</th>
+                                <th style="text-align: center; font-size: 10px; color: var(--color-text-secondary);">З кредитних?</th>
+                                <th>Тіло (вечір)</th> 
+                                <th>Нарах. %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kdzTbody"></tbody>
+                    </table>
+                </div>
                 
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label for="amountInst">Сума розстрочки (грн)</label>
-                        <input type="number" id="amountInst" value="30000" step="0.01" min="0">
+                <div class="result-section" style="margin-top: var(--space-lg);">
+                    <div class="result-item">
+                        <span class="result-label">Залишок тіла</span>
+                        <span class="result-value" id="kdzRemBody">0.00 грн</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Накопичені відсотки</span>
+                        <span class="result-value" id="kdzRemInt">0.00 грн</span>
+                    </div>
+                    <div class="result-item" style="border-top: 2px solid var(--color-border); padding-top: var(--space-md); margin-top: 4px;">
+                        <span class="result-label" style="font-weight: 600;">Всього до повного погашення</span>
+                        <span class="result-value highlight" id="kdzTotalDebt" style="color: var(--color-primary);">0.00 грн</span>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="monthsInst">Кількість місяців</label>
-                        <input type="number" id="monthsInst" value="6" min="1" max="24">
+                    <div class="details-log-container">
+                        <button class="text-link" onclick="toggleDetailsKdz()">📜 Показати розшифровку КДЗ</button>
+                        <div id="detailsAreaKdz" style="display: none;">
+                            <div class="details-log" id="detailsLogKdz"></div>
+                            <div class="copy-btn-container">
+                                <button class="btn btn-outline" style="width: auto; height: 28px; padding: 0 12px; font-size: 12px;" onclick="copyDetailsKdz()">Копіювати звіт</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <button class="btn" onclick="calculateInstallment()">Розрахувати</button>
-                
-                <div class="result-section" id="resultInst" style="display: none;">
-                    <div class="result-item">
-                        <span class="result-label">Щомісячний платіж</span>
-                        <span class="result-value highlight" id="monthlyPayment">0 грн</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Комісія за місяць</span>
-                        <span class="result-value" id="monthlyFee">0 грн</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Загальна переплата</span>
-                        <span class="result-value" id="totalOverpayment">0 грн</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Всього до сплати</span>
-                        <span class="result-value" id="totalInstallment">0 грн</span>
-                    </div>
-                </div>
-                
-                <div class="info-box">
-                    ℹ️ Комісія 1.9% від суми розстрочки щомісяця
                 </div>
             </div>
         </div>
     </div>
     
     <script>
-        let periodCounter31 = 0;
-        let periodCounter62 = 0;
-        let periodCounterOverdraft = 0;
+        function getTodayString() { const d = new Date(); return d.toISOString().split('T')[0]; }
+        function formatDateDDMM(date) { const day = String(date.getDate()).padStart(2, '0'); const month = String(date.getMonth() + 1).padStart(2, '0'); return `${day}.${month}`; }
+
+        let periodCounter31 = 0; let periodCounter62 = 0; let periodCounterOverdraft = 0;
         
-        // Перемикання вкладок
+        let activeCard = 'black'; 
+        let rateStandard = 3.1;
+        let ratePenalty = 6.2;
+
+        function switchCard(type) {
+            activeCard = type;
+            const btnBlack = document.getElementById('optBlack');
+            const btnIron = document.getElementById('optIron');
+            
+            if (type === 'black') {
+                btnBlack.classList.add('selected-black');
+                btnIron.classList.remove('selected-iron');
+                rateStandard = 3.1;
+                ratePenalty = 6.2;
+            } else {
+                btnBlack.classList.remove('selected-black');
+                btnIron.classList.add('selected-iron');
+                rateStandard = 2.9;
+                ratePenalty = 5.8;
+            }
+            updateRateLabels();
+            if(document.getElementById('resultCredit').style.display === 'block') calculateCredit();
+        }
+
+        function updateRateLabels() {
+            document.getElementById('labelStandard').textContent = `Ставка ${rateStandard}%`;
+            document.getElementById('labelPenalty').textContent = `Ставка ${ratePenalty}%`;
+            document.getElementById('labelOdLess').textContent = `Менше 1000 грн (${rateStandard}%)`;
+            document.getElementById('labelOdMore').textContent = `≥ 1000 грн (${ratePenalty}%)`;
+            document.getElementById('resLabelStandard').textContent = `Відсотки ${rateStandard}%`;
+            document.getElementById('resLabelPenalty').textContent = `Відсотки ${ratePenalty}%`;
+        }
+
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
                 tab.classList.add('active');
                 const tabId = tab.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
+                document.getElementById('mainSubtitle').textContent = tab.getAttribute('data-sub');
+                if(tabId === 'kdz' && document.getElementById('kdzTbody').children.length === 0) rebuildKdzTable();
             });
         });
+
+        function addPeriod31() { periodCounter31++; createPeriod('periods31', 'period31', periodCounter31, 25000); }
+        function addPeriod62() { periodCounter62++; createPeriod('periods62', 'period62', periodCounter62, 25000); }
+        function addPeriodOverdraft() { periodCounterOverdraft++; createPeriod('periodsOverdraft', 'periodOverdraft', periodCounterOverdraft, 2000); }
         
-        // Додавання періоду для 3.1%
-        function addPeriod31() {
-            periodCounter31++;
-            const periodsDiv = document.getElementById('periods31');
-            const periodCard = document.createElement('div');
-            periodCard.className = 'period-card';
-            periodCard.id = 'period31-' + periodCounter31;
-            periodCard.innerHTML = `
-                <div class="period-header">
-                    <span class="period-title">Період ${periodCounter31}</span>
-                    <button class="remove-btn" onclick="removePeriod31(${periodCounter31})" title="Видалити період">×</button>
-                </div>
+        function createPeriod(containerId, prefix, count, defaultAmt) {
+            const today = getTodayString();
+            const div = document.createElement('div');
+            div.className = 'period-card';
+            div.id = prefix + '-' + count;
+            div.innerHTML = `
+                <div class="period-header"><span class="period-title">Період ${count}</span><button class="remove-btn" onclick="document.getElementById('${prefix}-${count}').remove()">×</button></div>
                 <div class="grid-3">
-                    <div class="form-group">
-                        <label>День від</label>
-                        <input type="number" class="debt31-from" value="1" min="1" max="31">
-                    </div>
-                    <div class="form-group">
-                        <label>День до</label>
-                        <input type="number" class="debt31-to" value="10" min="1" max="31">
-                    </div>
-                    <div class="form-group">
-                        <label>Сума боргу (грн)</label>
-                        <input type="number" class="debt31-amount" value="25000" step="0.01" min="0">
-                    </div>
-                </div>
-            `;
-            periodsDiv.appendChild(periodCard);
+                    <div class="form-group" style="margin-bottom:0"><label>Дата з</label><input type="date" class="${prefix}-from" value="${today}"></div>
+                    <div class="form-group" style="margin-bottom:0"><label>по</label><input type="date" class="${prefix}-to" value="${today}"></div>
+                    <div class="form-group" style="margin-bottom:0"><label>Сума</label><input type="number" class="${prefix}-amount" value="${defaultAmt}"></div>
+                </div>`;
+            document.getElementById(containerId).appendChild(div);
         }
-        
-        // Видалення періоду для 3.1%
-        function removePeriod31(id) {
-            const period = document.getElementById('period31-' + id);
-            if (period) {
-                period.remove();
-            }
+
+        function resetCredit() {
+            document.getElementById('periods31').innerHTML = ''; document.getElementById('periods62').innerHTML = ''; document.getElementById('periodsOverdraft').innerHTML = '';
+            periodCounter31 = 0; periodCounter62 = 0; periodCounterOverdraft = 0;
+            document.getElementById('leapYearCredit').checked = false;
+            document.querySelector('input[name="overdraftRange"][value="less"]').checked = true;
+            document.getElementById('resultCredit').style.display = 'none';
         }
-        
-        // Додавання періоду для 6.2%
-        function addPeriod62() {
-            periodCounter62++;
-            const periodsDiv = document.getElementById('periods62');
-            const periodCard = document.createElement('div');
-            periodCard.className = 'period-card';
-            periodCard.id = 'period62-' + periodCounter62;
-            periodCard.innerHTML = `
-                <div class="period-header">
-                    <span class="period-title">Період ${periodCounter62}</span>
-                    <button class="remove-btn" onclick="removePeriod62(${periodCounter62})" title="Видалити період">×</button>
-                </div>
-                <div class="grid-3">
-                    <div class="form-group">
-                        <label>День від</label>
-                        <input type="number" class="debt62-from" value="1" min="1" max="31">
-                    </div>
-                    <div class="form-group">
-                        <label>День до</label>
-                        <input type="number" class="debt62-to" value="10" min="1" max="31">
-                    </div>
-                    <div class="form-group">
-                        <label>Сума боргу (грн)</label>
-                        <input type="number" class="debt62-amount" value="25000" step="0.01" min="0">
-                    </div>
-                </div>
-            `;
-            periodsDiv.appendChild(periodCard);
-        }
-        
-        // Видалення періоду для 6.2%
-        function removePeriod62(id) {
-            const period = document.getElementById('period62-' + id);
-            if (period) {
-                period.remove();
-            }
-        }
-        
-        // Об'єднаний розрахунок для кредитного ліміту
+
         function calculateCredit() {
-            const isLeap = document.getElementById('leapYearCredit').checked;
-            const daysInYear = isLeap ? 366 : 365;
+            const daysInYear = document.getElementById('leapYearCredit').checked ? 366 : 365;
+            let logStd = "", logPen = "", logOd = "";
             
-            // Розрахунок 3.1%
-            const periodsDiv31 = document.getElementById('periods31');
-            const periodCards31 = periodsDiv31.querySelectorAll('.period-card');
-            let totalInterest31 = 0;
-            
-            periodCards31.forEach(card => {
-                const from = parseInt(card.querySelector('.debt31-from').value) || 0;
-                const to = parseInt(card.querySelector('.debt31-to').value) || 0;
-                const amount = parseFloat(card.querySelector('.debt31-amount').value) || 0;
-                
-                const days = to - from + 1;
-                if (days > 0) {
-                    const interest = (amount * days * 3.1 * 12) / daysInYear / 100;
-                    totalInterest31 += interest;
-                }
-            });
-            
-            // Розрахунок 6.2%
-            const periodsDiv62 = document.getElementById('periods62');
-            const periodCards62 = periodsDiv62.querySelectorAll('.period-card');
-            let totalInterest62 = 0;
-            
-            periodCards62.forEach(card => {
-                const from = parseInt(card.querySelector('.debt62-from').value) || 0;
-                const to = parseInt(card.querySelector('.debt62-to').value) || 0;
-                const amount = parseFloat(card.querySelector('.debt62-amount').value) || 0;
-                
-                const days = to - from + 1;
-                if (days > 0) {
-                    const interest = (amount * days * 6.2 * 12) / daysInYear / 100;
-                    totalInterest62 += interest;
-                }
-            });
-            
-            // Розрахунок овердрафту
-            const overdraftRange = document.querySelector('input[name="overdraftRange"]:checked').value;
-            const rate = overdraftRange === 'more' ? 6.2 : 3.1;
-            
-            const periodsDivOverdraft = document.getElementById('periodsOverdraft');
-            const periodCardsOverdraft = periodsDivOverdraft.querySelectorAll('.period-card');
-            let totalInterestOverdraft = 0;
-            
-            periodCardsOverdraft.forEach(card => {
-                const from = parseInt(card.querySelector('.overdraft-from').value) || 0;
-                const to = parseInt(card.querySelector('.overdraft-to').value) || 0;
-                const amount = parseFloat(card.querySelector('.overdraft-amount').value) || 0;
-                
-                const days = to - from + 1;
-                if (days > 0) {
-                    const interest = (amount * days * rate * 12) / daysInYear / 100;
-                    totalInterestOverdraft += interest;
-                }
-            });
-            
-            const totalInterest = totalInterest31 + totalInterest62;
-            
-            document.getElementById('interest31').textContent = totalInterest31.toFixed(2) + ' грн';
-            document.getElementById('interest62').textContent = totalInterest62.toFixed(2) + ' грн';
-            document.getElementById('totalInterest').textContent = totalInterest.toFixed(2) + ' грн';
-            document.getElementById('appliedRate').textContent = rate + '%';
-            document.getElementById('interestOverdraft').textContent = totalInterestOverdraft.toFixed(2) + ' грн';
+            const calcGroup = (selector, rate) => {
+                let total = 0, logText = "";
+                document.querySelectorAll(selector).forEach(card => {
+                    const dateInputs = card.querySelectorAll('input[type="date"]');
+                    const numInputs = card.querySelectorAll('input[type="number"]');
+                    if(dateInputs.length >= 2) {
+                        const fromStr = dateInputs[0].value;
+                        const toStr = dateInputs[1].value;
+                        const amt = parseFloat(numInputs[0].value) || 0;
+                        if(fromStr && toStr) {
+                            const fromDate = new Date(fromStr); const toDate = new Date(toStr);
+                            let currentDate = new Date(fromDate);
+                            while (currentDate <= toDate) {
+                                const dailyInterest = (amt * 1 * rate * 12) / daysInYear / 100;
+                                logText += `${formatDateDDMM(currentDate)}: ${amt.toFixed(2)} × ${rate}% / ${daysInYear} = ${dailyInterest.toFixed(2)} грн\n`;
+                                total += dailyInterest; currentDate.setDate(currentDate.getDate() + 1);
+                            }
+                        }
+                    }
+                });
+                return {total, logText};
+            };
+
+            const resStd = calcGroup('#periods31 .period-card', rateStandard);
+            const resPen = calcGroup('#periods62 .period-card', ratePenalty);
+            const odRate = document.querySelector('input[name="overdraftRange"]:checked').value === 'more' ? ratePenalty : rateStandard;
+            const resOd = calcGroup('#periodsOverdraft .period-card', odRate);
+
+            document.getElementById('interest31').textContent = resStd.total.toFixed(2) + ' грн';
+            document.getElementById('interest62').textContent = resPen.total.toFixed(2) + ' грн';
+            document.getElementById('totalInterest').textContent = (resStd.total + resPen.total).toFixed(2) + ' грн';
+            document.getElementById('appliedRate').textContent = odRate + '%';
+            document.getElementById('interestOverdraft').textContent = resOd.total.toFixed(2) + ' грн';
             document.getElementById('resultCredit').style.display = 'block';
+
+            let fullLog = "";
+            if(resStd.logText) fullLog += `=== СТАНДАРТ ${rateStandard}% ===\n` + resStd.logText + "\n";
+            if(resPen.logText) fullLog += `=== ПІДВИЩЕНА ${ratePenalty}% ===\n` + resPen.logText + "\n";
+            if(resOd.logText) fullLog += `=== ОВЕРДРАФТ ${odRate}% ===\n` + resOd.logText;
+            document.getElementById('detailsLogText').textContent = fullLog;
         }
-        
-        // Розрахунок розстрочки
+
+        function toggleDetails() { const el = document.getElementById('detailsArea'); el.style.display = el.style.display === 'none' ? 'block' : 'none'; }
+        function copyDetails() { navigator.clipboard.writeText(document.getElementById('detailsLogText').textContent).then(() => alert('Copied!')); }
+
+        function updateSliderVisuals() {
+            const slider = document.getElementById('monthsInst');
+            document.getElementById('monthsDisplay').textContent = slider.value;
+            const percentage = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+            slider.style.background = `linear-gradient(to right, #ea5b5b 0%, #ea5b5b ${percentage}%, #e6e6e6 ${percentage}%, #e6e6e6 100%)`;
+            if(document.getElementById('resultInst').style.display === 'block') calculateInstallment();
+        }
+        function liveUpdateInst() {
+            const input = document.getElementById('amountInst');
+            const errorMsg = document.getElementById('instError');
+            if (parseFloat(input.value) > 400000) { input.value = 400000; errorMsg.classList.add('visible'); } else { errorMsg.classList.remove('visible'); }
+            if(document.getElementById('resultInst').style.display === 'block') calculateInstallment();
+        }
         function calculateInstallment() {
-            const amount = parseFloat(document.getElementById('amountInst').value) || 0;
-            const months = parseInt(document.getElementById('monthsInst').value) || 0;
-            
-            const monthlyFee = amount * 0.019;
-            const monthlyPayment = (amount / months) + monthlyFee;
-            const totalOverpayment = monthlyFee * months;
-            const totalAmount = amount + totalOverpayment;
-            
-            document.getElementById('monthlyPayment').textContent = monthlyPayment.toFixed(2) + ' грн';
-            document.getElementById('monthlyFee').textContent = monthlyFee.toFixed(2) + ' грн';
-            document.getElementById('totalOverpayment').textContent = totalOverpayment.toFixed(2) + ' грн';
-            document.getElementById('totalInstallment').textContent = totalAmount.toFixed(2) + ' грн';
+            let amt = parseFloat(document.getElementById('amountInst').value) || 0;
+            if (amt > 400000) amt = 400000;
+            const mos = parseInt(document.getElementById('monthsInst').value) || 0;
+            if (amt <= 0 || mos <= 0) return;
+            const fee = amt * 0.019; const monthlyPrincipal = amt / mos; const monthlyTotal = monthlyPrincipal + fee; const over = fee * mos;
+            document.getElementById('monthlyPayment').textContent = monthlyTotal.toFixed(2) + ' грн';
+            document.getElementById('monthlyFee').textContent = fee.toFixed(2) + ' грн';
+            document.getElementById('totalOverpayment').textContent = over.toFixed(2) + ' грн';
+            document.getElementById('totalInstallment').textContent = (amt + over).toFixed(2) + ' грн';
             document.getElementById('resultInst').style.display = 'block';
-        }
-        
-        // Додавання періоду для овердрафту
-        function addPeriodOverdraft() {
-            periodCounterOverdraft++;
-            const periodsDiv = document.getElementById('periodsOverdraft');
-            const periodCard = document.createElement('div');
-            periodCard.className = 'period-card';
-            periodCard.id = 'periodOverdraft-' + periodCounterOverdraft;
-            periodCard.innerHTML = `
-                <div class="period-header">
-                    <span class="period-title">Період ${periodCounterOverdraft}</span>
-                    <button class="remove-btn" onclick="removePeriodOverdraft(${periodCounterOverdraft})" title="Видалити період">×</button>
-                </div>
-                <div class="grid-3">
-                    <div class="form-group">
-                        <label>День від</label>
-                        <input type="number" class="overdraft-from" value="1" min="1" max="31">
-                    </div>
-                    <div class="form-group">
-                        <label>День до</label>
-                        <input type="number" class="overdraft-to" value="10" min="1" max="31">
-                    </div>
-                    <div class="form-group">
-                        <label>Сума перевищення (грн)</label>
-                        <input type="number" class="overdraft-amount" value="2000" step="0.01" min="0">
-                    </div>
-                </div>
-            `;
-            periodsDiv.appendChild(periodCard);
-        }
-        
-        // Видалення періоду для овердрафту
-        function removePeriodOverdraft(id) {
-            const period = document.getElementById('periodOverdraft-' + id);
-            if (period) {
-                period.remove();
+            
+            let logText = `СУМА: ${amt.toFixed(2)} грн | ТЕРМІН: ${mos} міс\n`;
+            logText += `--------------------------------\n`;
+            for (let i = 1; i <= mos; i++) {
+                logText += `Місяць ${i}: ${monthlyPrincipal.toFixed(2)} (тіло) + ${fee.toFixed(2)} (ком.) = ${monthlyTotal.toFixed(2)} грн\n`;
             }
+            logText += `--------------------------------\n`;
+            logText += `ЗАГАЛОМ: ${(amt + over).toFixed(2)} грн`;
+            document.getElementById('detailsLogInst').textContent = logText;
+        }
+        function toggleDetailsInst() { const el = document.getElementById('detailsAreaInst'); el.style.display = el.style.display === 'none' ? 'block' : 'none'; }
+        function copyDetailsInst() { navigator.clipboard.writeText(document.getElementById('detailsLogInst').textContent).then(() => alert('Copied!')); }
+        function resetInst() { document.getElementById('amountInst').value = '30000'; document.getElementById('monthsInst').value = 6; updateSliderVisuals(); document.getElementById('resultInst').style.display = 'none'; document.getElementById('instError').classList.remove('visible'); }
+
+        // KDZ LOGIC
+        function resetKdz() { 
+            // Full Reset Logic: Defaults
+            document.getElementById('kdzBody').value = 1000;
+            document.getElementById('kdzDays').value = 2;
+            document.getElementById('kdzRate').value = '0.3';
+            document.getElementById('errBody').style.display = 'none';
+            document.getElementById('errDays').style.display = 'none';
+            document.getElementById('kdzBody').classList.remove('input-error');
+            document.getElementById('kdzDays').classList.remove('input-error');
+            rebuildKdzTable(); 
+        }
+
+        function validateKdzInputs(autoFix = false) {
+            let body = document.getElementById('kdzBody');
+            let days = document.getElementById('kdzDays');
+            let bodyVal = parseFloat(body.value);
+            let daysVal = parseInt(days.value);
+            
+            let valid = true;
+            
+            if (bodyVal < 1000 || isNaN(bodyVal)) {
+                if(autoFix) { body.value = 1000; body.classList.remove('input-error'); document.getElementById('errBody').style.display = 'none'; }
+                else { body.classList.add('input-error'); document.getElementById('errBody').style.display = 'block'; valid = false; }
+            } else {
+                body.classList.remove('input-error'); document.getElementById('errBody').style.display = 'none';
+            }
+
+            if (daysVal < 2 || isNaN(daysVal)) {
+                if(autoFix) { days.value = 2; days.classList.remove('input-error'); document.getElementById('errDays').style.display = 'none'; }
+                else { days.classList.add('input-error'); document.getElementById('errDays').style.display = 'block'; valid = false; }
+            } else {
+                days.classList.remove('input-error'); document.getElementById('errDays').style.display = 'none';
+            }
+            
+            return valid;
         }
         
-        // Ініціалізація з одним періодом для кожної ставки
-        addPeriod31();
-        addPeriod62();
-        addPeriodOverdraft();
-        
-        // Автоматичний розрахунок при зміні значень для розстрочки
-        ['amountInst', 'monthsInst'].forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
-                if (document.getElementById('resultInst').style.display === 'block') {
-                    calculateInstallment();
+        function handleKdzInput() {
+            // Allows free typing, just shows warning visual
+            validateKdzInputs(false);
+            
+            // Only rebuild table if values are actually valid numbers, even if out of range visually
+            let d = parseInt(document.getElementById('kdzDays').value);
+            if (!isNaN(d) && d > 0) rebuildKdzTable(); 
+        }
+
+        function rebuildKdzTable() {
+            let days = parseInt(document.getElementById('kdzDays').value);
+            if (isNaN(days) || days < 1) return; // Don't crash on empty input
+            if (days > 30) { days = 30; } // Soft cap for rendering
+
+            const tbody = document.getElementById('kdzTbody'); tbody.innerHTML = '';
+            for (let d = 1; d <= days; d++) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                <td style="text-align: center; color: var(--color-text-secondary);">${d}</td>
+                <td class="cell-body-start text-dim">0.00</td>
+                <td style="background-color: rgba(94, 82, 64, 0.02); position: relative;"><input type="number" class="kdz-input input-body" placeholder="0"></td>
+                <td class="checkbox-cell"><input type="checkbox" class="custom-checkbox is-credit-row" title="Сплачено з кредитних (+4%)"></td>
+                <td class="cell-body-end text-bold">0.00</td>
+                <td class="cell-int-daily text-dim">0.00</td>`;
+                tbody.appendChild(tr);
+            }
+            recalculateKdz();
+        }
+
+        function recalculateKdz() {
+            const startBody = parseFloat(document.getElementById('kdzBody').value) || 0; // Use 0 if empty/invalid to avoid NaN
+            const rate = parseFloat(document.getElementById('kdzRate').value) || 0.3;
+            
+            const rows = document.querySelectorAll('#kdzTbody tr');
+            let currentBody = startBody; 
+            let accumulatedInt = 0;
+            let logText = `СУМА: ${startBody.toFixed(2)} грн | СТАВКА: ${rate}%/день\n--------------------------------\n`;
+
+            rows.forEach((row, index) => {
+                const dayNum = index + 1;
+                const inputElem = row.querySelector('.input-body');
+                const checkboxElem = row.querySelector('.is-credit-row');
+                
+                row.querySelector('.cell-body-start').textContent = currentBody.toFixed(2);
+                const startOfDayBody = currentBody;
+
+                let rawInput = parseFloat(inputElem.value) || 0;
+                let effectivePayment = rawInput; 
+                let commissionText = "";
+                let displayHelper = row.querySelector('.effective-val');
+
+                if (checkboxElem.checked && rawInput > 0) {
+                    const cellCommission = rawInput * 0.04;
+                    if (!displayHelper) {
+                        displayHelper = document.createElement('span');
+                        displayHelper.className = 'effective-val commission-val';
+                        inputElem.parentElement.appendChild(displayHelper);
+                    }
+                    displayHelper.textContent = `+${cellCommission.toFixed(2)} комісія`;
+                    commissionText = ` (+${cellCommission.toFixed(2)} комісія)`;
+                } else {
+                     if (displayHelper) displayHelper.remove();
                 }
+
+                if (effectivePayment > currentBody) {
+                     effectivePayment = currentBody; 
+                     inputElem.style.borderColor = "var(--color-error)";
+                } else {
+                     inputElem.style.borderColor = "var(--color-border)";
+                }
+
+                // SUBTRACT PAYMENT FIRST
+                currentBody -= effectivePayment; 
+                if(currentBody < 0) currentBody = 0;
+                
+                let dailyInt = 0;
+                
+                if (index === 0) {
+                     dailyInt = startOfDayBody * rate / 100;
+                } else {
+                     dailyInt = currentBody * rate / 100;
+                }
+                
+                accumulatedInt += dailyInt;
+
+                row.querySelector('.cell-int-daily').textContent = '+' + dailyInt.toFixed(2);
+                row.querySelector('.cell-body-end').textContent = currentBody.toFixed(2);
+
+                logText += `День ${dayNum}:\n`;
+                logText += `  Тіло на ранок: ${startOfDayBody.toFixed(2)}\n`;
+                if(rawInput > 0) logText += `  Погашення: -${rawInput.toFixed(2)}${commissionText}\n`;
+                logText += `  Тіло на вечір: ${currentBody.toFixed(2)}\n`;
+                
+                if (index === 0) {
+                     logText += `  Відсоток (День 1 - завжди): ${startOfDayBody.toFixed(2)} × ${rate}% = ${dailyInt.toFixed(2)}\n`;
+                } else {
+                     logText += `  Відсоток (День ${dayNum}): ${currentBody.toFixed(2)} × ${rate}% = ${dailyInt.toFixed(2)}\n`;
+                }
+                logText += `--------------------------------\n`;
             });
+
+            logText += `Всього борг (тіло + %): ${(currentBody + accumulatedInt).toFixed(2)} грн`;
+
+            document.getElementById('kdzRemBody').textContent = currentBody.toFixed(2) + ' грн';
+            document.getElementById('kdzRemInt').textContent = accumulatedInt.toFixed(2) + ' грн';
+            document.getElementById('kdzTotalDebt').textContent = (currentBody + accumulatedInt).toFixed(2) + ' грн';
+            document.getElementById('detailsLogKdz').textContent = logText;
+        }
+        
+        function toggleDetailsKdz() { const el = document.getElementById('detailsAreaKdz'); el.style.display = el.style.display === 'none' ? 'block' : 'none'; }
+        function copyDetailsKdz() { navigator.clipboard.writeText(document.getElementById('detailsLogKdz').textContent).then(() => alert('Copied!')); }
+
+        document.getElementById('kdzTable').addEventListener('input', recalculateKdz);
+        document.getElementById('kdzTable').addEventListener('change', (e) => {
+            if (e.target.matches('.is-credit-row')) recalculateKdz();
         });
+        
+        rebuildKdzTable(); updateSliderVisuals(); switchCard('black');
     </script>
 </body>
 </html>
